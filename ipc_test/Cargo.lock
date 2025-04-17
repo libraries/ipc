@@ -48,7 +48,7 @@ checksum = "06a655bd9d7696c024604d7f1228dcf468785a56c0254c17de85fb899ffacea0"
 [[package]]
 name = "ckb-script-ipc"
 version = "1.0.1"
-source = "git+https://github.com/libraries/ckb-script-ipc?branch=ipc#483b626ff4c4d2b803a8cd58b01b2ed962e6e3c2"
+source = "git+https://github.com/xujiandong/ckb-script-ipc#0b36d10baa0ccfc942c38d073c48186a8c79114f"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -57,12 +57,13 @@ dependencies = [
 
 [[package]]
 name = "ckb-script-ipc-common"
-version = "1.0.1"
-source = "git+https://github.com/libraries/ckb-script-ipc?branch=ipc#483b626ff4c4d2b803a8cd58b01b2ed962e6e3c2"
+version = "1.0.2"
+source = "git+https://github.com/xujiandong/ckb-script-ipc#0b36d10baa0ccfc942c38d073c48186a8c79114f"
 dependencies = [
  "ckb-rust-std",
  "ckb-std",
  "enumn",
+ "log",
  "serde",
  "serde_json",
 ]
@@ -111,6 +112,12 @@ name = "itoa"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
+
+[[package]]
+name = "log"
+version = "0.4.27"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "memchr"

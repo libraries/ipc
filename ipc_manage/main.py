@@ -173,6 +173,27 @@ def ipc_test_call_math_add_with_type_id_args():
     assert ipc_ret['payload']['MathAdd'] == 3
 
 
+def ipc_test_call_string_len():
+    pyckb.config.upgrade('http://127.0.0.1:8114')
+    pyckb.config.current = pyckb.config.develop
+    ipc_script_locator = {
+        'out_point': acdb['ipc_test']['out_point'],
+    }
+    ipc_req = {
+        'version': '0x0',
+        'method_id': '0x0',
+        'payload_format': 'json',
+        'payload': {
+            'StringLen': {
+                's': '0' * 4096,
+            },
+        },
+    }
+    ipc_ret = pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
+    print(f'main: call result script={ipc_ret}')
+    assert ipc_ret['payload']['StringLen'] == 4096
+
+
 def ipc_test_call_syscall_load_script():
     pyckb.config.upgrade('http://127.0.0.1:8114')
     pyckb.config.current = pyckb.config.develop
@@ -302,6 +323,8 @@ for cmd in args.cmd:
         ipc_test_call_math_add_with_hex()
     if cmd == 'ipc_test_call_math_add_with_type_id_args':
         ipc_test_call_math_add_with_type_id_args()
+    if cmd == 'ipc_test_call_string_len':
+        ipc_test_call_string_len()
     if cmd == 'ipc_test_call_syscall_load_script':
         ipc_test_call_syscall_load_script()
     if cmd == 'ipc_test_call_syscall_load_script_with_env':

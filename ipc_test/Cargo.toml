@@ -17,8 +17,8 @@ path = "src/ipc_test.rs"
 
 [dependencies]
 ckb-std = { version = "0.17", default-features = false, features = ["allocator", "ckb-types", "dummy-atomic"] }
-ckb-script-ipc = { git = "https://github.com/libraries/ckb-script-ipc", branch = "ipc" }
-ckb-script-ipc-common = { git = "https://github.com/libraries/ckb-script-ipc", branch = "ipc" }
+ckb-script-ipc = { git = "https://github.com/xujiandong/ckb-script-ipc" }
+ckb-script-ipc-common = { git = "https://github.com/xujiandong/ckb-script-ipc", features= ["enable-logging"] }
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 
 [profile.release]

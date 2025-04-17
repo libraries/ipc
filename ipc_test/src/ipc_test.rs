@@ -12,6 +12,7 @@ ckb_std::default_alloc!();
 pub trait IpcTest {
     fn math_add(a: u64, b: u64) -> u64;
     fn spawn(s: String) -> String;
+    fn string_len(s: String) -> usize;
     fn syscall_load_script() -> Vec<u8>;
 }
 
@@ -47,6 +48,10 @@ impl IpcTest for IpcTestServer {
         let mut buf = [0; 256];
         let buf_len = ckb_std::syscalls::read(std_fds[0], &mut buf).unwrap();
         String::from_utf8_lossy(&buf[..buf_len]).to_string()
+    }
+
+    fn string_len(&mut self, s: String) -> usize {
+        return s.len()
     }
 
     fn syscall_load_script(&mut self) -> Vec<u8> {
