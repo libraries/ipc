@@ -14,6 +14,7 @@ $ python ipc_manage/main.py ipc_test_build
 $ python ipc_manage/main.py ipc_test_deploy
 
 # Test
+$ python ipc_manage/main.py ipc_test_call_infinite_loop
 $ python ipc_manage/main.py ipc_test_call_math_add
 $ python ipc_manage/main.py ipc_test_call_math_add_with_exec
 $ python ipc_manage/main.py ipc_test_call_math_add_with_hex

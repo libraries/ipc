@@ -45,6 +45,24 @@ def ipc_test_build():
     subprocess.run('cargo build --release', shell=True)
 
 
+def ipc_test_call_infinite_loop():
+    pyckb.config.upgrade('http://127.0.0.1:8114')
+    pyckb.config.current = pyckb.config.develop
+    ipc_script_locator = {
+        'out_point': acdb['ipc_test']['out_point'],
+    }
+    ipc_req = {
+        'version': '0x0',
+        'method_id': '0x0',
+        'payload_format': 'json',
+        'payload': {
+            'InfiniteLoop': {},
+        },
+    }
+    ipc_ret = pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
+    print(f'main: call result json={ipc_ret}')
+
+
 def ipc_test_call_math_add():
     pyckb.config.upgrade('http://127.0.0.1:8114')
     pyckb.config.current = pyckb.config.develop
@@ -313,6 +331,8 @@ for cmd in args.cmd:
         ckb_pm_k()
     if cmd == 'ipc_test_build':
         ipc_test_build()
+    if cmd == 'ipc_test_call_infinite_loop':
+        ipc_test_call_infinite_loop()
     if cmd == 'ipc_test_call_math_add':
         ipc_test_call_math_add()
     if cmd == 'ipc_test_call_math_add_with_exec':

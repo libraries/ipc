@@ -11,6 +11,7 @@ ckb_std::default_alloc!();
 #[ckb_script_ipc::service]
 pub trait IpcTest {
     fn math_add(a: u64, b: u64) -> u64;
+    fn infinite_loop();
     fn spawn(s: String) -> String;
     fn string_len(s: String) -> usize;
     fn syscall_load_script() -> Vec<u8>;
@@ -21,6 +22,12 @@ struct IpcTestServer {}
 impl IpcTest for IpcTestServer {
     fn math_add(&mut self, a: u64, b: u64) -> u64 {
         a.checked_add(b).unwrap()
+    }
+
+    fn infinite_loop(&mut self) {
+        loop {
+            let _ = ckb_std::syscalls::current_cycles();
+        }
     }
 
     fn spawn(&mut self, s: String) -> String {
@@ -51,7 +58,7 @@ impl IpcTest for IpcTestServer {
     }
 
     fn string_len(&mut self, s: String) -> usize {
-        return s.len()
+        return s.len();
     }
 
     fn syscall_load_script(&mut self) -> Vec<u8> {
