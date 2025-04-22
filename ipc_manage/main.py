@@ -132,7 +132,7 @@ def ipc_test_call_math_add_with_hex():
         }).encode()).hex(),
     }
     ipc_ret = pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
-    print(f'main: call result data={ipc_ret}')
+    print(f'main: call result json={ipc_ret}')
     assert json.loads(bytearray.fromhex(ipc_ret['payload'][2:]).decode())['MathAdd'] == 3
 
 
@@ -208,7 +208,7 @@ def ipc_test_call_string_len():
         },
     }
     ipc_ret = pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
-    print(f'main: call result script={ipc_ret}')
+    print(f'main: call result json={ipc_ret}')
     assert ipc_ret['payload']['StringLen'] == 4096
 
 
