@@ -1,5 +1,5 @@
 import argparse
-import contextlib
+import concurrent.futures
 import itertools
 import lib.acdb
 import json
@@ -322,6 +322,56 @@ def ipc_test_deploy():
     }
 
 
+def ipc_wrk_math_add():
+    pyckb.config.upgrade('http://127.0.0.1:8114')
+    pyckb.config.current = pyckb.config.develop
+    ipc_script_locator = {
+        'out_point': acdb['ipc_test']['out_point'],
+    }
+    ipc_req = {
+        'version': '0x0',
+        'method_id': '0x0',
+        'payload_format': 'json',
+        'payload': {
+            'MathAdd': {'a': 2, 'b': 1},
+        },
+    }
+    future_list = []
+    with concurrent.futures.ThreadPoolExecutor(32) as e:
+        for _ in range(4096):
+            future_list.append(e.submit(pyckb.rpc.call, 'ipc_call', [ipc_script_locator, ipc_req]))
+    result_list = [e.result() for e in future_list]
+    for e in result_list:
+        assert e['payload']['MathAdd'] == 3
+
+
+def ipc_wrk_infinite_loop():
+    pyckb.config.upgrade('http://127.0.0.1:8114')
+    pyckb.config.current = pyckb.config.develop
+    ipc_script_locator = {
+        'out_point': acdb['ipc_test']['out_point'],
+    }
+    ipc_req = {
+        'version': '0x0',
+        'method_id': '0x0',
+        'payload_format': 'json',
+        'payload': {
+            'InfiniteLoop': {},
+        },
+    }
+    future_list = []
+    with concurrent.futures.ThreadPoolExecutor(8) as e:
+        for _ in range(128):
+            future_list.append(e.submit(pyckb.rpc.call, 'ipc_call', [ipc_script_locator, ipc_req]))
+    for f in future_list:
+        try:
+            f.result()
+        except Exception:
+            pass
+        else:
+            assert 0
+
+
 os.makedirs(f'{ipc_root}/devnet', exist_ok=True)
 os.makedirs(f'{ipc_root}/res', exist_ok=True)
 
@@ -356,3 +406,7 @@ for cmd in args.cmd:
         ipc_test_call_syscall_load_script_with_env()
     if cmd == 'ipc_test_deploy':
         ipc_test_deploy()
+    if cmd == 'ipc_wrk_infinite_loop':
+        ipc_wrk_infinite_loop()
+    if cmd == 'ipc_wrk_math_add':
+        ipc_wrk_math_add()

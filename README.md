@@ -23,11 +23,14 @@ $ python ipc_manage/main.py ipc_test_call_math_add_with_type_id_args
 $ python ipc_manage/main.py ipc_test_call_string_len
 $ python ipc_manage/main.py ipc_test_call_syscall_load_script
 $ python ipc_manage/main.py ipc_test_call_syscall_load_script_with_env
+
+# Bench
+$ python ipc_manage/main.py ipc_wrk_math_add
+$ python ipc_manage/main.py ipc_wrk_infinite_loop
 ```
 
 ## Quick
 
 ```sh
 $ python ipc_manage/main.py ckb_pm_k ckb_build ckb_pm_c
-$ python ipc_manage/main.py ipc_test_call_infinite_loop ipc_test_call_math_add ipc_test_call_math_add_with_exec ipc_test_call_math_add_with_hex ipc_test_call_math_add_with_spawn ipc_test_call_math_add_with_type_id_args ipc_test_call_string_len ipc_test_call_syscall_load_script ipc_test_call_syscall_load_script_with_env
 ```
