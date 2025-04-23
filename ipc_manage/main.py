@@ -1,4 +1,5 @@
 import argparse
+import contextlib
 import itertools
 import lib.acdb
 import json
@@ -59,8 +60,12 @@ def ipc_test_call_infinite_loop():
             'InfiniteLoop': {},
         },
     }
-    ipc_ret = pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
-    print(f'main: call result json={ipc_ret}')
+    try:
+        pyckb.rpc.call('ipc_call', [ipc_script_locator, ipc_req])
+    except Exception:
+        pass
+    else:
+        assert 0
 
 
 def ipc_test_call_math_add():
